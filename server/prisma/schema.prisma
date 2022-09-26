@@ -9,3 +9,53 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id String @id() @default(uuid()) @unique
+  name String
+  email String @unique
+  password String
+  level Int @default(1)
+  experience Float @default(0)
+}
+
+model Building {
+  id String @id @default(uuid()) @unique
+  name String @unique
+  imgUrl String @unique
+  cost Cost @relation(fields: [costId], references: [id], onDelete: NoAction)
+  costId String @unique()
+  description String
+  functionalities String
+}
+
+model Cost {
+  id String @id @default(uuid()) @unique
+  building Building?
+  card Cart?
+  ducats Int @default(0)
+  wood Int @default(0)
+  stone Int @default(0)
+  clay Int @default(0)
+  wheat Int @default(0)
+  meat Int @default(0)
+  fish Int @default(0)
+}
+
+model Cart {
+  id String @id @default(uuid()) @unique
+  level Int @unique()
+  securityLevel Int
+  discounts Int
+  movement Int
+  plunderChange Float
+  cost Cost @relation(fields: [costId], references: [id], onDelete: NoAction)
+  costId String @unique()
+}
+
+model Developement {
+  id String @id @default(uuid()) @unique
+  name String @unique()
+  description String
+  action String
+}
