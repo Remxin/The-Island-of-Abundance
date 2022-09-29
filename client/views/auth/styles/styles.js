@@ -36,7 +36,7 @@ export const backgroundImageStyle = StyleSheet.create({
 
 export const knightImageStyle = StyleSheet.create({
     widht: "80%",
-    height: "60%",
+    height: "80%",
     maxWidth: "60%",
     resizeMode: "contain",
     zIndex: -1,

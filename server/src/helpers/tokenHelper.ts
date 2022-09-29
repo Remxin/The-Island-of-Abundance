@@ -4,7 +4,7 @@ const secret = process.env.TOKEN
 if (!secret) throw new Error("Token secret is not defined")
 
 const signUserToken = (userId: string) => {
-    const token = jwt.sign({ id: userId }, secret, { expiresIn: "5d "})
+    const token = jwt.sign({ id: userId }, secret, { expiresIn: "5d"})
     return token
 }
 

@@ -5,6 +5,8 @@ import { prisma } from ".."
 
 
 export const signup = async (req: Request, res: Response) => {
+    console.log('idzie');
+    
     const { name, email, password } = JSON.parse(req.body)
     if (!name || !email || !password) return res.status(400).send({ err: "Please enter all fields"})
 
@@ -13,7 +15,9 @@ export const signup = async (req: Request, res: Response) => {
     const user = await prisma.user.create({ data: {name, email, password: hashedPass }})
 
     const token = await tokenHelper.signUserToken(user.id)
-    res.json({...user, token})
+    await prisma.user.update({ where: { id: user.id }, data: { authToken: token }})
+    
+    res.json({...user, authToken: token})
 }
 
 export const login = async (req: Request, res: Response) => {
@@ -26,8 +30,9 @@ export const login = async (req: Request, res: Response) => {
 
     if (!isPasswordValid) return res.status(400).send({ err: "Wrong password"})
     const token = await tokenHelper.signUserToken(user.id)
+    await prisma.user.update({ where: { id: user.id }, data: { authToken: token }})
 
-    res.json({ ...user, token })
+    res.json({ ...user, authToken: token })
 }
 
 export const verifyUser = async (req: Request, res: Response) => {
