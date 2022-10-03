@@ -21,6 +21,12 @@ import LoadingScreen from './views/loading/LoadingScreen';
 import AuthScreen from './views/auth/AuthScreen';
 import HomeScreen from './views/home/HomeScreen';
 
+// redux
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider as ReduxProvider } from 'react-redux';
+
+import userReducer from './features/user';
+
 import {
   StyleSheet,
   Text,
@@ -38,6 +44,12 @@ import {
 
 
 
+const reduxStore = configureStore({
+  reducer: {
+    user: userReducer
+  }
+})
+
 const HomeTabs = () => {
   return (
     <View></View>
@@ -53,15 +65,17 @@ const App = () => {
   };
 
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <AppStack.Navigator>
-          <AppStack.Screen name="Loading" component={LoadingScreen} options={{header: () => null}}/>
-          <AppStack.Screen name="Auth" component={AuthScreen} options={{header: () => null}}/>
-          <AppStack.Screen name="Home" component={HomeScreen} options={{ header: () => null }}/>
-        </AppStack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <ReduxProvider store={reduxStore}>
+      <PaperProvider>
+        <NavigationContainer>
+          <AppStack.Navigator>
+            <AppStack.Screen name="Loading" component={LoadingScreen} options={{header: () => null}}/>
+            <AppStack.Screen name="Auth" component={AuthScreen} options={{header: () => null}}/>
+            <AppStack.Screen name="Home" component={HomeScreen} options={{ header: () => null }}/>
+          </AppStack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </ReduxProvider>
   );
 };
 
