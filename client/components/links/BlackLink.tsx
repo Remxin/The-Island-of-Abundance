@@ -1,18 +1,25 @@
 import { View, Text, TouchableNativeFeedback, StyleSheet } from 'react-native'
 import React from 'react'
 
-const BlackLink = ({ text, onPressFunction }) => {
+type componentType = {
+  text: string,
+  onPressFunction: () => any
+}
+
+const BlackLink = ({ text, onPressFunction }: componentType) => {
   return (
     <TouchableNativeFeedback onPress={onPressFunction}>
         <View>
-            <Text style={textStyle}>{text}</Text>
+            <Text style={textStyle.style}>{text}</Text>
         </View>
     </TouchableNativeFeedback>
   )
 }
 
 const textStyle = StyleSheet.create({
-  fontWeight: "bold"
+  style: {
+    fontWeight: "bold"
+  }
 })
 
 export default BlackLink

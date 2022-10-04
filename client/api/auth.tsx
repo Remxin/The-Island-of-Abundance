@@ -1,7 +1,12 @@
 import appConsts from "../consts/appConsts"
 
-export const login = (email, password) => {
-    return new Promise(async (resolve, reject) => {
+type returnType = {
+    err?: Error,
+    data?: any
+}
+
+export const login = (email: string, password: string) => {
+    return new Promise<returnType>(async (resolve, reject) => {
        
         try {
             const res = await fetch(`${appConsts.serverIp}/login`, {
@@ -19,8 +24,8 @@ export const login = (email, password) => {
     })
 }
 
-export const register = (name, email, password) => {
-    return new Promise(async (resolve, reject) => {
+export const register = (name: string, email: string, password: string) => {
+    return new Promise<returnType>(async (resolve, reject) => {
         try {
             console.log(name, email, password);
             const res = await fetch(`${appConsts.serverIp}/signup`, {
@@ -38,13 +43,13 @@ export const register = (name, email, password) => {
     })
 }
 
-export const verifyUser = () => {
-    return new Promise(async (resolve, reject) => {
+export const verifyUser = (token: string) => {
+    return new Promise<returnType>(async (resolve, reject) => {
         try {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_IP}/login`, {
+            const res = await fetch(`${appConsts.serverIp}/login`, {
                 method: "POST",
                 body: JSON.stringify({
-                    email, password
+                   token
                 })
             })
 

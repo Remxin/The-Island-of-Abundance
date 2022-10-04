@@ -1,19 +1,23 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 
+type componentType = {
+  text: string,
+  onPressFunction: () => any
+}
 
-
-const GreenBtn = ({ text, onPressFunction}) => {
+const GreenBtn = ({ text, onPressFunction}: componentType) => {
   return (
     <TouchableOpacity onPress={onPressFunction} activeOpacity={0.8}>
-        <View style={buttonStyles}>
-            <Text style={textStyles}>{text}</Text>
+        <View style={buttonStyles.style}>
+            <Text style={textStyles.style}>{text}</Text>
         </View>
       </TouchableOpacity>
   )
 }
 
 const buttonStyles = StyleSheet.create({
+  style: {
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#42855B",
@@ -26,9 +30,11 @@ const buttonStyles = StyleSheet.create({
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.5,
     shadowRadius: 15,
+  }
 })
 
 const textStyles = StyleSheet.create({
+  style: {
     textAlign: "center",
     color: "white",
     textShadowColor: "black",
@@ -36,6 +42,7 @@ const textStyles = StyleSheet.create({
     fontWeight: "bold",
     // textShadowRadius: 2
     fontFamily: "Avenir-Book"
+  }
     
 })
 

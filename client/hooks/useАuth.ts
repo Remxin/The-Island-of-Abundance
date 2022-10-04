@@ -3,7 +3,7 @@ import { setUser, removeUser } from "../features/user";
 
 const useAuth = () => {
     useEffect(() => {
-        const token = AsyncStorage
+        // const token = AsyncStorage
     }, [])
 }
 
