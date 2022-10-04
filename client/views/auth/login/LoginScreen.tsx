@@ -6,14 +6,14 @@ import BlackLink from "../../../components/links/BlackLink"
 import { TextInput } from 'react-native-paper'
 
 import { login } from '../../../api/auth'
-import { NavigationAction } from '@react-navigation/native'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import useAuth from '../../../hooks/useАuth'
 
  
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const { setToken } = useAuth()
 
 
     async function loginHandler(){
@@ -22,7 +22,10 @@ const LoginScreen = ({ navigation }: any) => {
       if (!password) return
 
       const res = await login(email, password)
-      console.log(res)
+      if (res.err) return // todo: error handling
+      if (res.data) {
+        const isWorking = await setToken(res.data.authToken)
+      }
 
     }
   return (

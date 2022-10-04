@@ -5,6 +5,6 @@ const router = Router()
 
 router.post("/signup", signup)
 router.post("/login", login)
-router.post("/verify", verifyUser)
+router.post("/verifyuser", verifyUser)
 
 export default router
