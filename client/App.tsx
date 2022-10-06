@@ -26,6 +26,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import userReducer from './features/user';
+import soundReducer from "./features/soundsMusic"
 
 import {
   StyleSheet,
@@ -46,7 +47,8 @@ import {
 
 const reduxStore = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    sound: soundReducer
   }
 })
 
