@@ -3,12 +3,10 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { soundsType } from '../../features/soundsMusic'
 
-// const bgMusic = new Sound(require("../../public/music/Neverland.mp3"), (err) => {
-//   if (err) console.log(err)
-// }) 
-// const bgMusic = new Sound("neverland.mp3", Sound.MAIN_BUNDLE, (err) => {
-//   console.log(err)
-// })
+import Windmill from '../../components/buildings/Windmill'
+import Castle from '../../components/buildings/Castle'
+import TradingPost from '../../components/buildings/TradingPost'
+
 type stateType = {
   sound: { value: soundsType}
 }
@@ -26,7 +24,9 @@ const HomeScreen = () => {
   return (
     <View style={styles.pageContainer}>
       <Image style={styles.bgcImage} source={require("../../public/images/green-hills.jpg")}/>
-      {/* <Text>HomeScreen</Text> */}
+      <Windmill/>
+      <Castle/>
+      <TradingPost/>
     </View>
   )
 }

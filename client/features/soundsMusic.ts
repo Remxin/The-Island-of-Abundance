@@ -19,7 +19,7 @@ const sounds = {
     },
 
     musics: {
-        home: new Sound("neverland.mp3", Sound.MAIN_BUNDLE)
+        home: new Sound(require("../public/music/neverland.mp3"))
     }
 }
 
