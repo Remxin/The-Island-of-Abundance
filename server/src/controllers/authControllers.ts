@@ -5,7 +5,6 @@ import { prisma } from ".."
 
 
 export const signup = async (req: Request, res: Response) => {
-    console.log('idzie');
     
     const { name, email, password } = JSON.parse(req.body)
     if (!name || !email || !password) return res.status(400).send({ err: "Please enter all fields"})
@@ -23,26 +22,32 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     const { email, password } = JSON.parse(req.body)
     if (!email || !password) return res.status(400).send({ err: "Please enter all fields"}) 
-
+    
+    
     const user = await prisma.user.findUnique({ where: {email}})
     if (!user) return res.status(400).send({ err: "This user does not exist" })
     const isPasswordValid = await hashHelpers.isPasswordValid(user?.password, password)
-
+    
     if (!isPasswordValid) return res.status(400).send({ err: "Wrong password"})
     const token = await tokenHelper.signUserToken(user.id)
     await prisma.user.update({ where: { id: user.id }, data: { authToken: token }})
-
+    
     res.json({ ...user, authToken: token })
 }
 
 export const verifyUser = async (req: Request, res: Response) => {
     const { token } = JSON.parse(req.body)
     if (!token) return res.status(401).send({ err: "User not logged"})
-
+    
+    // console.log(token);
+    
     const userId = await tokenHelper.decodeUserId(token)
+    console.log(userId);
     if (!userId) return res.status(401).send({ err: "User not verified"})
-
+    
+    
     const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true, email: true, level: true, experience: true, id: true }})
+    console.log(user);
     if (!user) return res.status(401).send({ err: "User does not exist anymore"})
     res.json(user)
 }

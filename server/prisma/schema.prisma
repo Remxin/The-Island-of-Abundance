@@ -18,21 +18,26 @@ model User {
   password String
   level Int @default(1)
   experience Float @default(0)
+  game GameObject? @relation(fields: [gameId], references: [id])
+  gameId String?
+
 }
 
 model Building {
   id String @id @default(uuid()) @unique
   name String @unique
   imgUrl String @unique
-  cost Cost @relation(fields: [costId], references: [id], onDelete: NoAction)
-  costId String @unique()
+  cost Cost?
   description String
+  upgradableFrom String
   functionalities String
+  tier String
 }
 
 model Cost {
   id String @id @default(uuid()) @unique
-  building Building?
+  building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  buildingId String  @unique
   card Cart?
   ducats Int @default(0)
   wood Int @default(0)
@@ -60,3 +65,12 @@ model Developement {
   description String
   action String
 }
+
+model GameObject {
+  id String @id @default(uuid()) @unique
+  maxPlayers Int @default(4)
+  players User[]
+  timestamps Float
+  mapSize String
+  turnTime Int 
+ }

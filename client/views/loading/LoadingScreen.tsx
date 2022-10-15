@@ -30,7 +30,7 @@ const LoadingScreen = ({ navigation }) => {
         if (loadingUser) return
       
         if (!userData) return navigation.navigate("Auth")
-        navigation.navigate("Home")
+        navigation.navigate("HomeStack")
     }, [loadingUser])
 
     // console.log(loadingStage);

@@ -1,12 +1,24 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 
-const TradingPost = () => {
+type componentType = {
+    onClickFunction?: Function
+}
+
+const TradingPost = ({ onClickFunction = undefined }: componentType) => {
+
+    const onClickHandler = () => {
+      if (!onClickFunction) return
+      onClickFunction()  
+    } 
+
     return (
-        <View style={styles.container}>
-            {/* <Text>Castle...</Text> */}
-            <Image style={styles.tradingPost} source={require("../../public/images/buildings/tradepost/trade.png")}/>
-        </View>
+        <Pressable onPress={() => onClickHandler()}>
+            <View style={styles.container}>
+                {/* <Text>Castle...</Text> */}
+                <Image style={styles.tradingPost} source={require("../../public/images/buildings/tradepost/trade.png")}/>
+            </View>
+        </Pressable>
       )
     }
     

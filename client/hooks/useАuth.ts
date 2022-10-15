@@ -2,30 +2,44 @@ import { useEffect, useState } from "react";
 import { setUser, removeUser } from "../features/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import appConsts from "../consts/appConsts";
+import { useDispatch } from "react-redux";
+
 
 const useAuth = () => {
     const [userData, setUserData] = useState(null)
     const [loadingUser, setLoadingUser] = useState(true)
+    const dispatch = useDispatch()
 
 
     useEffect(() => {
         if (userData) return
         (async function verifyUser() {
-            const token = await AsyncStorage.getItem("token")
-            console.log(token);
-            
-            if (!token) return
-            const res = await fetch(`${appConsts.serverIp}/verifyuser`, {
-                method: "POST",
-                body: JSON.stringify({ token })
-            })
+            try {
 
-            const resData = await res.json()
-            setUserData(resData)
-            
-            setUser(resData)
-
-            setLoadingUser(false)
+                const token = await AsyncStorage.getItem("token")
+                
+                if (!token) return
+                const res = await fetch(`${appConsts.serverIp}/verifyuser`, {
+                    method: "POST",
+                    body: JSON.stringify({ token })
+                })
+                
+                const resData = await res.json()
+                // console.log(resData);
+                if (resData.err) {
+                    setLoadingUser(false)
+                    return
+                }
+                setUserData(resData)
+                
+                dispatch(setUser(resData))
+                
+                setLoadingUser(false)
+            } catch (err) {
+                setLoadingUser(false)
+                console.log(err);
+                
+            }
 
         }())
     }, [])

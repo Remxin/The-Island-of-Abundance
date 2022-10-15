@@ -1,0 +1,8 @@
+--------- TODO ---------
+
+__ BUILDINGS __
+dock
+castle
+
+__ SOCKETS __
+socket handshake verification

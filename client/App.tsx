@@ -6,41 +6,44 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
-// providers
+// ___ PROVIDERS ___
 import { Provider as PaperProvider } from 'react-native-paper';
 
-// router
+// ___ ROUTER ___
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-//screens
+// ___ SCREENS ___
 import LoadingScreen from './views/loading/LoadingScreen';
 import AuthScreen from './views/auth/AuthScreen';
 import HomeScreen from './views/home/HomeScreen';
 
-// redux
-import { configureStore } from '@reduxjs/toolkit';
+// ___ REDUX ___
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
-
+// - reducers
 import userReducer from './features/user';
 import soundReducer from "./features/soundsMusic"
 
+// ___ CONTEXTS ___
+import { SocketContext } from './contexts/SocketContext';
+
+// ___ HOOKS ___
+import useSocket from './hooks/useSocket';
+
+// ___ TYPES ___
+import { useSocketType } from './hooks/useSocket';
+
 import {
   StyleSheet,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 
@@ -49,15 +52,32 @@ const reduxStore = configureStore({
   reducer: {
     user: userReducer,
     sound: soundReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false})
 })
 
+
+// GAME STACK
+const HomeStack = createNativeStackNavigator()
+
 const HomeTabs = () => {
+  const socket = useSocket()
+
+  useEffect(() => {
+    socket.connectToServer()
+  }, [])
+  
   return (
-    <View></View>
+    <SocketContext.Provider value={socket}>
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Home" component={HomeScreen} options={{ header: () => null }}/>
+      </HomeStack.Navigator>
+    </SocketContext.Provider>
   )
 }
 
+
+// MAIN STACK
 const AppStack = createNativeStackNavigator()
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -73,7 +93,7 @@ const App = () => {
           <AppStack.Navigator>
             <AppStack.Screen name="Loading" component={LoadingScreen} options={{header: () => null}}/>
             <AppStack.Screen name="Auth" component={AuthScreen} options={{header: () => null}}/>
-            <AppStack.Screen name="Home" component={HomeScreen} options={{ header: () => null }}/>
+            <AppStack.Screen name="HomeStack" component={HomeTabs} options={{ header: () => null }}/>
           </AppStack.Navigator>
         </NavigationContainer>
       </PaperProvider>

@@ -52,6 +52,7 @@ export const verifyUser = (token: string) => {
                    token
                 })
             })
+            
 
             const resData = await res.json()
             resolve({ data: resData })
