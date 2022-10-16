@@ -39,15 +39,12 @@ export const verifyUser = async (req: Request, res: Response) => {
     const { token } = JSON.parse(req.body)
     if (!token) return res.status(401).send({ err: "User not logged"})
     
-    // console.log(token);
     
     const userId = await tokenHelper.decodeUserId(token)
-    console.log(userId);
     if (!userId) return res.status(401).send({ err: "User not verified"})
     
     
     const user = await prisma.user.findUnique({ where: { id: userId }, select: { name: true, email: true, level: true, experience: true, id: true }})
-    console.log(user);
     if (!user) return res.status(401).send({ err: "User does not exist anymore"})
     res.json(user)
 }

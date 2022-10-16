@@ -31,15 +31,6 @@ app.use(express.static("static"))
 
 app.use(authRoutes)
 
-app.get("/images/*", (req: Request, res: Response ) => {
-    const url = req.url
-    console.log(path.join(__dirname, "/static/images"));
-    
-    res.sendFile(path.join(__dirname, "/static/", url))
-    
-    // res.sendFile("")
-})
-
 
 // listening
 app.listen(PORT, () => {

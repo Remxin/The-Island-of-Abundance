@@ -29,8 +29,6 @@ const HomeScreen = () => {
 
   const socketConnected = socket?.connected
   const [showGameInfo, setShowGameInfo] = useState(false)
-
-  console.log(socketConnected);
   
 
   useEffect(() => {

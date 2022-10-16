@@ -5,6 +5,10 @@ interface MenuHelpersTypes {
     socket: Socket
 }
 
+type responseType = { 
+    data?: any
+    err?: Error
+ }
 
 
 
@@ -16,9 +20,11 @@ class MenuHelpers implements MenuHelpersTypes {
     }
 
     getBuildings = () => {
-        return new Promise<BuildingType[] | Error>((resolve, reject) => {
+        return new Promise<responseType>((resolve, reject) => {
             try {
-                this.socket.emit("/get/buildings", (response: BuildingType[]) => {
+                this.socket.emit("get buildings", {},  (response: responseType, error: Error) => {
+                    if (error) resolve({ err: error})
+                    
                     resolve(response)
                 })
             } catch (err) {

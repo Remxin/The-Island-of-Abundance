@@ -3,6 +3,8 @@ import React, {useState } from 'react'
 import LightWoodenBtn from '../buttons/lightWoodenBtn/LigthWoodenButton'
 import CloseBtn from '../buttons/CloseBtn'
 
+import Buildings from '../menuSections/Buildings'
+
 import { GameInfoButtonContext } from '../../contexts/GameInfoButtonContext'
 
 type componentType = {
@@ -16,7 +18,7 @@ const ComponentContent = ({ section }: {section: string}) => {
         case "How to play":
             return <></>
         case "Buildings":
-            
+            return <Buildings/>
         default:
             return <></>
     }
@@ -32,8 +34,9 @@ const GameInfoModal = ({ visible, setVisible}: componentType) => {
             {/* @ts-ignore */}
             <GameInfoButtonContext.Provider value={{ setBtn: setButtonSelected, selectedBtn: buttonSelected }}>
                 <Image style={styles.buttonsPanelImage} source={require("../../public/images/dark-wood.jpg")}/>
-                <CloseBtn position={{x: "-50%", y: 0}} onClickFunction={() => setVisible(false)}/>
+                <CloseBtn position={{x: 0, y: 5}} onClickFunction={() => setVisible(false)}/>
                 <LightWoodenBtn text="How to play" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
+                <LightWoodenBtn text="Cards" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Buildings" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Developents" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Dangers" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
