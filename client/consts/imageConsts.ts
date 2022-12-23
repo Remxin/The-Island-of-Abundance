@@ -15,6 +15,8 @@ export default {
         "City": require("../public/images/cardsBackgrounds/wheat.jpg"),
         "Fishery": require("../public/images/cardsBackgrounds/sea.jpg"),
         "Trading City": require("../public/images/cardsBackgrounds/money-stack.jpg"),
+        "Dock": require("../public/images/cardsBackgrounds/sea.jpg"),
+        "Castle": require("../public/images/cardsBackgrounds/road.jpg")
     },
 
     resourceImageMap: {

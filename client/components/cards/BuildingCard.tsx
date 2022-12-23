@@ -119,10 +119,8 @@ const styles = StyleSheet.create({
   description: {
     padding: 15,
     color: "white",
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-    // overflow: "scroll"
-    // textAlign: "center"
   }
 })
 

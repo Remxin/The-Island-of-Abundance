@@ -63,24 +63,26 @@ async function create () {
     // }})
     
     // const building = await prisma.building.create({ data: {
-    //     name: "Trading City",
-    //     imgUrl: "/images/trading-post.png",
-    //     description: "Tier III settlement. Provides 2 copies of surrounding filelds sources and 1 ducat on them + 7.",
+    //     name: "Castle",
+    //     imgUrl: "/images/castle.png",
+    //     description: "Tier III settlement. Provides 2 copies of surrounding fileds items. Provides 20% less kniht loss chance, +3 resources security when plundering by bandits. Knights can be placed nearby",
     //     upgradableFrom: "City",
-    //     functionalities: "d1",
+    //     functionalities: "",
     //     tier: "III"
     // }})
     // const cost = await prisma.cost.create({ data: {
     //     buildingId: building.id,
-    //     ducats: 6,
-    //     wheat: 2,
+    //     ducats: 2,
+    //     wood: 3,
+    //     stone: 3,
     //     meat: 2,
-    //     fish: 3
+    //     wheat: 1
     // }})
     // console.log(cost);
 
     // const building = await prisma.building.findMany({include: { cost: true}})
     // console.log(building);
+    // console.log(building)
 
     // const cost2 = await prisma.cost.findUnique({ where: {id: "a73578d8-9a0c-4f00-a0e7-252c210c2fb9"}, include: {building: true}})
     // //@ts-ignore
