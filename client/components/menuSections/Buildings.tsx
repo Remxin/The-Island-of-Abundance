@@ -5,11 +5,16 @@ import { BuildingType } from '../../types/types'
 import BuildingCard from '../cards/BuildingCard'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { useBuildings } from '../../hooks/data/useBuildings'
+import LottieView from "lottie-react-native"
+import LeafLoading from '../loading/LeafLoading'
+import { useSelector } from 'react-redux'
+
+import { GameDataType, gameDataSelectorType } from '../../features/gameData'
 
 const Buildings = () => {
-  const { buildings, loading} = useBuildings()
+  const buildings = useSelector((state: gameDataSelectorType) => state.gameData.value.buildings)
 
-    if (loading) return <Text>Connecting to socket...</Text>
+  // console.log(buildings)
 
   return (
     <View style={styles.container}>

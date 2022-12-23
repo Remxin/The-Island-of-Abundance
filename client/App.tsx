@@ -7,6 +7,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { Text } from 'react-native-paper';
 
 // ___ PROVIDERS ___
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -27,12 +28,14 @@ import { Provider as ReduxProvider } from 'react-redux';
 // - reducers
 import userReducer from './features/user';
 import soundReducer from "./features/soundsMusic"
+import gameDataReducer from './features/gameData';
 
 // ___ CONTEXTS ___
 import { SocketContext } from './contexts/SocketContext';
 
 // ___ HOOKS ___
 import useSocket from './hooks/useSocket';
+import { useBuildings } from './hooks/data/useBuildings';
 
 // ___ TYPES ___
 import { useSocketType } from './hooks/useSocket';
@@ -45,13 +48,16 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import LeafLoading from './components/loading/LeafLoading';
+
 
 
 
 const reduxStore = configureStore({
   reducer: {
     user: userReducer,
-    sound: soundReducer
+    sound: soundReducer,
+    gameData: gameDataReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false})
 })
@@ -62,11 +68,16 @@ const HomeStack = createNativeStackNavigator()
 
 const HomeTabs = () => {
   const socket = useSocket()
+  // console.log(socket)
+  const { loading: buildingsLoading, error: buildingsError } = useBuildings(socket)
 
   useEffect(() => {
     socket.connectToServer()
   }, [])
-  
+  console.log(buildingsLoading)
+
+  if (buildingsLoading) return <LeafLoading text="Loading game data..."/>
+  if (buildingsError) return <Text>{ buildingsError }</Text>
   return (
     <SocketContext.Provider value={socket}>
       <HomeStack.Navigator>

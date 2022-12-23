@@ -8,27 +8,41 @@ import FullScreenBlock from '../fullScreen/FullScreenBlock'
 
 // types
 import { BuildingType } from '../../types/types'
+import LeafLoading from '../loading/LeafLoading'
 
 type componentType = {
   data: BuildingType
 }
 
+// constants
+const maxImages = 2
+
 const BuildingCard = ({data}: componentType) => {
 
   const [descriptionVisible, setDescriptionVisible] = useState(false)
+  const [imagesLoaded, setImagesLoaded] = useState(0)
+  // const [backgroundLoaded, setBackgroundLoaded] = 
 
   function handleOnPress() {
     setDescriptionVisible(p => !p)
   }
 
+
+  // if (imagesLoaded < maxImages) return (
+  //   <View style={[styles.container, { backgroundColor: "#232323bb"}]}>
+  //     <LeafLoading></LeafLoading>
+  //   </View>
+  // )
+  console.log(imagesLoaded)
+
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={handleOnPress}>
-      {/* images */}
-
+      
       {/* @ts-ignore */}
-      <Image source={imageConsts.buildingDestinationImagesMap[data.name]} style={styles.cardBackground}/>
+      <Image source={imageConsts.buildingDestinationImagesMap[data.name]} style={styles.cardBackground}  onLoad={() => setImagesLoaded(p => p + 1)}/>
       {/* @ts-ignore */}
-      <Image style={styles.cardImage} source={imageConsts.buildingCardsImagesMap[data.imgUrl]}/>
+      <Image style={styles.cardImage} source={imageConsts.buildingCardsImagesMap[data.imgUrl]} onLoad={() => setImagesLoaded(p => p + 1)}/>
+      { imagesLoaded < maxImages ? null : <>
       <View style={styles.containerShadow}></View>
       <Text style={styles.cardName}>{data.name}</Text>
       <View style={styles.resourcesContainer}>
@@ -51,6 +65,7 @@ const BuildingCard = ({data}: componentType) => {
       <FullScreenBlock visible={descriptionVisible}>
         <Text style={styles.description}>{data.description}</Text>
       </FullScreenBlock>
+      </>}
     </TouchableOpacity>
   )
 }
