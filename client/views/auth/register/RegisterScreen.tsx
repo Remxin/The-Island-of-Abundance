@@ -1,12 +1,21 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { containerStyle, knightImageStyle, screenTitleStyle, textInputStyle } from '../styles/styles'
 import { TextInput } from 'react-native-paper'
 
+
+// hooks
+import { register } from "../../../api/auth"
+import useAuth from '../../../hooks/useАuth'
+
+// components
+import AuthInput from '../../../components/inputs/AuthInput'
 import BlackLink from '../../../components/links/BlackLink'
 import GreenBtn from '../../../components/buttons/greenBtn/GreenBtn'
+import SlideUpModal from '../../../components/modals/SlideUpModal'
 
-import { register } from "../../../api/auth"
+// validations
+import { validateEmail, validateUserPassword, validateUserNick } from '../../../validations/auth'
 
 type componentType = {
   navigation: any
@@ -14,10 +23,18 @@ type componentType = {
 
 //@ts-ignore
 const RegisterScreen: React.FC = ({ navigation }) => {
+  const { setToken } = useAuth()
+
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  // errors
+  const errorShowTimeout = useRef() as any
+  const [connectionError, setConnectionError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const [emailError, setEmailError] = useState("")
 
 
   async function handleRegister() {
@@ -25,12 +42,30 @@ const RegisterScreen: React.FC = ({ navigation }) => {
     if (!name) return
     if (!email) return
     if (!password) return 
+
+    // validations
+    if (!validateUserNick(name)) return setEmailError("User nick should be at least 8 characters long and shouldn't be offensive")
+    if (!validateEmail(email)) return setEmailError("This email is not valid")
+    if (!validateUserPassword(password)) return setPasswordError("Password should be at least 6 characters long and contain at least one letter, digit and special character")
     try {
       const res = await register(name, email, password) // todo: create useAuth, and keep data in redux
-      console.log(res)
+      if (res.err) {
+        setPasswordError(res.err + "")
+        return
+      }
+
+      if (res.data) {
+        const isWorking = await setToken(res.data.authToken)
+        navigation.navigate("HomeStack")
+      }
+
+
 
     } catch (err) {
-      console.log(err)
+      setConnectionError(err + "")
+      errorShowTimeout.current = setTimeout(() => {
+        setConnectionError("")
+      }, 3000)
     }
   }
 
@@ -41,14 +76,14 @@ const RegisterScreen: React.FC = ({ navigation }) => {
        <Image source={require("../../../public/gradients/EasyMed.jpg")} style={{ position: "absolute", zIndex: -1}}/>
         <View style={{ backgroundColor: "white",position: "relative", alignItems: "center", justifyContent: "center", width: "70%", height: "70%", borderRadius: 10}}>
             <Text style={screenTitleStyle.style}>Register</Text>
-            <TextInput value={name} onChangeText={(e) => setName(e)} mode="outlined" outlineColor="#232323" activeOutlineColor='##42855B' style={{ width: 120, height: 25, marginTop: 28}} placeholder='Name:' autoCapitalize="none" keyboardType="email-address"/>
-            <TextInput value={email} onChangeText={(e) => setEmail(e)} mode="outlined" outlineColor="#232323" activeOutlineColor='##42855B' style={{ width: 120, height: 25}} placeholder='Email:' autoCapitalize="none" keyboardType="email-address"/>
-            <TextInput value={password} onChangeText={(e) => setPassword(e)} mode='outlined' outlineColor="#233223" activeOutlineColor='##42855B' style={{ width: 120, height: 25, marginBottom: 8}} placeholder='Password:' secureTextEntry autoCapitalize='none'/>
+            <AuthInput onChangeText={setName} placeholder="Name: " validationFunction={validateUserNick} onErrorText="User nick should be at least 8 characters long and shouldn't be offensive"/>
+            <AuthInput onChangeText={setEmail} placeholder="Email: " validationFunction={validateEmail} onErrorText="This email is not valid"/>
+            <AuthInput onChangeText={setPassword} placeholder="Password: " secureTextInput={true} validationFunction={validateUserPassword} onErrorText="Password should be at least 6 characters long and contain at least one letter, digit and special character" style={{ marginBottom: 5 }}/>
             <GreenBtn text="Register" onPressFunction={handleRegister}/>
             <BlackLink text="Already have an account" onPressFunction={() => navigation.navigate("Login")}/>
             <Image style={{...knightImageStyle.style, position: "absolute", right: "-80%"}} source={require("../../../public/images/knight.jpg")}/>
           </View>
-    
+        <SlideUpModal visible={!!connectionError} text="Failed connecting to server"/>
   </View>
   )
 }

@@ -1,4 +1,6 @@
 --------- TODO ---------
+___ !!IMPORTANT!! ___
+add this file and images folder to gitignore
 
 __ BUILDINGS __
 dock

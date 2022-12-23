@@ -23,16 +23,19 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = JSON.parse(req.body)
     if (!email || !password) return res.status(400).send({ err: "Please enter all fields"}) 
     
-    
-    const user = await prisma.user.findUnique({ where: {email}})
-    if (!user) return res.status(400).send({ err: "This user does not exist" })
-    const isPasswordValid = await hashHelpers.isPasswordValid(user?.password, password)
-    
-    if (!isPasswordValid) return res.status(400).send({ err: "Wrong password"})
-    const token = await tokenHelper.signUserToken(user.id)
-    await prisma.user.update({ where: { id: user.id }, data: { authToken: token }})
-    
-    res.json({ ...user, authToken: token })
+    try {
+
+        const user = await prisma.user.findUnique({ where: {email}})
+        if (!user) return res.status(400).send({ err: "This user does not exist" })
+        const isPasswordValid = await hashHelpers.isPasswordValid(user?.password, password)
+        
+        if (!isPasswordValid) return res.status(400).send({ err: "Wrong password"})
+        const token = await tokenHelper.signUserToken(user.id)
+        await prisma.user.update({ where: { id: user.id }, data: { authToken: token }})
+        res.json({ ...user, authToken: token })
+    } catch (err) {
+        res.json({ err: "501 - internal server error"})
+    }
 }
 
 export const verifyUser = async (req: Request, res: Response) => {

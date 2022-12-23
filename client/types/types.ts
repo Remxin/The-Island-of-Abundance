@@ -6,7 +6,7 @@ export type BuildingType = {
     upgradableFrom: string
     functionalities: string,
     tier: string
-    cost?: CostType
+    cost: CostType
 }
 
 export type CostType = {
@@ -21,3 +21,5 @@ export type CostType = {
     meat: number
     fish: number
 }
+
+export type ResourceType =  "ducats" | "wood" | "stone" | "clay" | "wheat" | "meat" | "fish"

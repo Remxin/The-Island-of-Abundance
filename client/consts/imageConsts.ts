@@ -10,11 +10,11 @@ export default {
     },
 
     buildingDestinationImagesMap: {
-        "road": require("../public/images/cardsBackgrounds/road.jpg"),
+        "Road": require("../public/images/cardsBackgrounds/road.jpg"),
         "Village": require("../public/images/cardsBackgrounds/wheat.jpg"),
         "City": require("../public/images/cardsBackgrounds/wheat.jpg"),
         "Fishery": require("../public/images/cardsBackgrounds/sea.jpg"),
-        "Trading Post": require("../public/images/cardsBackgrounds/money-stack.jpg"),
+        "Trading City": require("../public/images/cardsBackgrounds/money-stack.jpg"),
     },
 
     resourceImageMap: {

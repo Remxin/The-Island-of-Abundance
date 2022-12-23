@@ -1,5 +1,4 @@
 import { prisma } from "../.."
-import { Socket } from "socket.io"
 
 const getBuildings = async (callback: Function) => {
     try {

@@ -1,15 +1,16 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, StyleProp, TextStyle } from 'react-native'
 import React from 'react'
 
 type componentType = {
   text: string,
-  onPressFunction: () => any
+  onPressFunction: () => any,
+  style?: StyleProp<TextStyle>
 }
 
-const GreenBtn = ({ text, onPressFunction}: componentType) => {
+const GreenBtn = ({ text, onPressFunction, style = {}}: componentType) => {
   return (
     <TouchableOpacity onPress={onPressFunction} activeOpacity={0.8}>
-        <View style={buttonStyles.style}>
+        <View style={[buttonStyles.style, style]}>
             <Text style={textStyles.style}>{text}</Text>
         </View>
       </TouchableOpacity>

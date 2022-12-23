@@ -10,9 +10,11 @@ const useAuth = () => {
     const [loadingUser, setLoadingUser] = useState(true)
     const dispatch = useDispatch()
 
-
     useEffect(() => {
-        if (userData) return
+        if (!userData) {
+            return setLoadingUser(false)
+        }
+        
         (async function verifyUser() {
             try {
 
@@ -37,12 +39,10 @@ const useAuth = () => {
                 setLoadingUser(false)
             } catch (err) {
                 setLoadingUser(false)
-                console.log(err);
-                
             }
 
         }())
-    }, [])
+    }, [userData])
 
     function setToken(token: string) {
         return new Promise(async (resolve, reject) => {

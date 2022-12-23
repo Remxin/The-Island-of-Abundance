@@ -3,48 +3,43 @@ import { SocketContext } from '../../contexts/SocketContext'
 import { BuildingType } from '../../types/types'
 
 import BuildingCard from '../cards/BuildingCard'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { useBuildings } from '../../hooks/data/useBuildings'
 
 const Buildings = () => {
-  const socket = useContext(SocketContext)
+  const { buildings, loading} = useBuildings()
 
-  const [pageLoading, setPageLoading] = useState(true)
-  const [buildings, setBuildings] = useState<BuildingType[]>([])
-
-    if (!socket) return <Text>Connecting to socket...</Text>
-
-
-    useEffect(() => {
-      (async () => {
-        const buildings = await socket.menuHelpers?.getBuildings()
-        
-        if (!buildings) return
-        if (buildings.err) return
-
-        setBuildings(buildings.data)
-        setPageLoading(false)
-      })()
-    }, [])
-
+    if (loading) return <Text>Connecting to socket...</Text>
 
   return (
     <View style={styles.container}>
-      {pageLoading ? <Text>Loading...</Text> : <>
+      <FlatList 
+        data={buildings} 
+        numColumns={4}
+        contentContainerStyle={styles.buildingsList}
       
-      {buildings.map((building: BuildingType) => {
-        if (!building) return
-        
-        return <BuildingCard key={building.id} data={building}/>
-      })}
-      </>}
+        renderItem={({ item }) => {
+        return <BuildingCard data={item}/>
+      }}/>
+      
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
+    // width: "100%",
     flexDirection: "row"
+  },
+
+  buildingsList: {
+    // flex: 1,
+    width: "100%",
+    // flexDirection: "column",
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: "space-between"
   }
 })
 
