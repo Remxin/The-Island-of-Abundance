@@ -23,7 +23,9 @@ export async function initSocket () {
     io.on("connection", (socket) => {
       // --- menu routes ---
       socket.on("get buildings", (_, callback) => menuResolvers.getBuildings(callback))
+      socket.on("get cards", (_, callback) => menuResolvers.getCards(callback))
 
+      // --- queue routes ---
       socket.on("find-random-game", (data: findRandomGameProps) => lobbyResolvers.findRandomGame(socket, data))
     });
     

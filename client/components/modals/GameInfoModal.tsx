@@ -6,6 +6,7 @@ import CloseBtn from '../buttons/CloseBtn'
 import Buildings from '../menuSections/Buildings'
 
 import { GameInfoButtonContext } from '../../contexts/GameInfoButtonContext'
+import Cards from '../menuSections/Cards'
 
 type componentType = {
     visible: boolean,
@@ -19,6 +20,8 @@ const ComponentContent = ({ section }: {section: string}) => {
             return <></>
         case "Buildings":
             return <Buildings/>
+        case "Cards":
+            return <Cards/>
         default:
             return <></>
     }

@@ -8,7 +8,6 @@ import FullScreenBlock from '../fullScreen/FullScreenBlock'
 
 // types
 import { BuildingType } from '../../types/types'
-import LeafLoading from '../loading/LeafLoading'
 
 type componentType = {
   data: BuildingType
@@ -28,12 +27,6 @@ const BuildingCard = ({data}: componentType) => {
   }
 
 
-  // if (imagesLoaded < maxImages) return (
-  //   <View style={[styles.container, { backgroundColor: "#232323bb"}]}>
-  //     <LeafLoading></LeafLoading>
-  //   </View>
-  // )
-  console.log(imagesLoaded)
 
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={handleOnPress}>

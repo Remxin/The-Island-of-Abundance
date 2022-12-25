@@ -36,6 +36,7 @@ import { SocketContext } from './contexts/SocketContext';
 // ___ HOOKS ___
 import useSocket from './hooks/useSocket';
 import { useBuildings } from './hooks/data/useBuildings';
+import { useCards } from './hooks/data/useCards';
 
 // ___ TYPES ___
 import { useSocketType } from './hooks/useSocket';
@@ -65,19 +66,20 @@ const reduxStore = configureStore({
 
 // GAME STACK
 const HomeStack = createNativeStackNavigator()
-
+ 
 const HomeTabs = () => {
   const socket = useSocket()
   // console.log(socket)
   const { loading: buildingsLoading, error: buildingsError } = useBuildings(socket)
-
+  const { loading: cardsLoading, error: cardsError, cards} = useCards(socket)
   useEffect(() => {
     socket.connectToServer()
   }, [])
-  console.log(buildingsLoading)
-
-  if (buildingsLoading) return <LeafLoading text="Loading game data..."/>
-  if (buildingsError) return <Text>{ buildingsError }</Text>
+  // console.log(buildingsLoading)
+  
+  if (buildingsLoading && cardsLoading) return <LeafLoading text="Loading game data..."/>
+  if (buildingsError && cardsError) return <Text>{ buildingsError }! { cardsError }</Text>
+  // console.log(cards)
   return (
     <SocketContext.Provider value={socket}>
       <HomeStack.Navigator>

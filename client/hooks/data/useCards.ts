@@ -2,14 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { useAsyncStorage } from "../useAsyncStorage";
 import { SocketContext } from "../../contexts/SocketContext";
 import { useDispatch } from "react-redux";
-import { setBuildings } from "../../features/gameData";
+import { setCards } from "../../features/gameData";
 import { useSocketType } from "../useSocket";
 
 
-export const useBuildings = (socket: useSocketType) => {
+export const useCards = (socket: useSocketType) => {
     //@ts-ignore
     // const socket = useContext(SocketContext)
-    const [buildingsStorage, setBuildingsStorage] = useAsyncStorage(null, "buildings")
+    const [cardsStorage, setCardsStorage] = useAsyncStorage(null, "buildings")
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string>('')
     const dispatch = useDispatch()
@@ -19,25 +19,25 @@ export const useBuildings = (socket: useSocketType) => {
         if (!socket.menuHelpers) return
         (async () => {
           setError("")
-            if (buildingsStorage) return setLoading(false) // buildings are saved locally
-            const buildingsData = await socket.menuHelpers?.getBuildings()
-            
-          if (!buildingsData?.data) {
+            if (cardsStorage) return setLoading(false) // buildings are saved locally
+            const cardsData = await socket.menuHelpers?.getCards()
+          
+          if (!cardsData?.data) {
             setError("connection error")
             setLoading(false)
             return
           }
-          if (buildingsData.err) {
-            setError(buildingsData.err + "")
+          if (cardsData.err) {
+            setError(cardsData.err + "")
             setLoading(false)
             return
           }
   
-          setBuildingsStorage(buildingsData.data)
-          dispatch(setBuildings({ buildings: buildingsData.data}))
+          setCardsStorage(cardsData.data)
+          dispatch(setCards({ cards: cardsData.data}))
           setLoading(false)
         })()
       }, [socket.connected, socket.menuHelpers])
 
-      return { buildings: buildingsStorage, loading, error }
+      return { cards: cardsStorage, loading, error }
 }

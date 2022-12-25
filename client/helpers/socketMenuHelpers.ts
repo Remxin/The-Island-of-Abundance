@@ -33,6 +33,20 @@ class MenuHelpers implements MenuHelpersTypes {
         })
     }
 
+    getCards = () => {
+        return new Promise<responseType>((resolve, reject) => {
+            try {
+                this.socket.emit("get cards", {},  (response: responseType, error: Error) => {
+                    if (error) resolve({ err: error})
+                    
+                    resolve(response)
+                })
+            } catch (err) {
+                reject({ err })
+            }
+        })
+    }
+
 }
 
 export default MenuHelpers

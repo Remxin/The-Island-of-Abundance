@@ -87,9 +87,14 @@ async function create () {
     // const cost2 = await prisma.cost.findUnique({ where: {id: "a73578d8-9a0c-4f00-a0e7-252c210c2fb9"}, include: {building: true}})
     // //@ts-ignore
     // console.log(cost2)
-
+    // const card = await prisma.card.create({ data: {
+    //     number: 7,
+    //     special: "bandits",
+    //     imageUrl: "/images/cards/bandits.jpg"
+    // }})
+    // console.log(card)
 
     
 }
 
-create()
+// create()

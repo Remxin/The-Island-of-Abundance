@@ -48,6 +48,13 @@ model Cost {
   fish Int @default(0)
 }
 
+model Card {
+  id String @id @default(uuid()) @unique
+  number Int
+  special String @default("")
+  imageUrl String
+}
+
 model Cart {
   id String @id @default(uuid()) @unique
   level Int @unique()

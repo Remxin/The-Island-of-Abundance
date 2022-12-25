@@ -29,6 +29,25 @@ export default {
         "fish": require("../public/images/resources/fish.png"),
     },
 
+    cardsImageMap: {
+        "/images/cards/arsonist.jpg": require("../public/images/cards/arsonist.jpg"),
+        "/images/cards/bandits.jpg": require("../public/images/cards/bandits.jpg"),
+        "/images/cards/calvarly.jpg": require("../public/images/cards/cavalry.jpg"),
+        "/images/cards/drought.jpg": require("../public/images/cards/drought.jpg"),
+        "/images/cards/earthquake.jpg": require("../public/images/cards/earthquake.jpg"),
+        "/images/cards/flood.jpg": require("../public/images/cards/flood.jpg"),
+        "/images/cards/forest_in_fire.jpg": require("../public/images/cards/forest_in_fire.jpg"),
+        "/images/cards/handshake.jpg": require("../public/images/cards/handshake.jpg"),
+        "/images/cards/harvest festival.jpg": require("../public/images/cards/harvest_festival.jpg"),
+        "/images/cards/harvesting.jpg": require("../public/images/cards/harvesting.jpg"),
+        "/images/cards/help_for_poor.jpg": require("../public/images/cards/help_for_poor.jpg"),
+        "/images/cards/knight_army.jpg": require("../public/images/cards/knight_army.jpg"),
+        "/images/cards/lake.jpg": require("../public/images/cards/lake.jpg"),
+        "/images/cards/trading.jpg": require("../public/images/cards/trading.jpg"),
+        
+
+    },
+
     tierBorderMap: {
         // TODO: map tiers to correct border type
         "I": "",

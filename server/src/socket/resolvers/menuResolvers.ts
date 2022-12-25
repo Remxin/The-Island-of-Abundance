@@ -9,6 +9,18 @@ const getBuildings = async (callback: Function) => {
     }
 }
 
+const getCards = async (callback: Function) => {
+    try {
+        console.log("cards")
+        const allCards = await prisma.card.findMany({ orderBy: { number: "desc" }})
+        console.log(allCards)
+        callback({ data: allCards })
+    } catch (err) {
+        callback({ err })
+    }
+}
+
 export default {
-    getBuildings
+    getBuildings,
+    getCards
 }

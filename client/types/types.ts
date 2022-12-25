@@ -9,6 +9,13 @@ export type BuildingType = {
     cost: CostType
 }
 
+export type CardsType = {
+    id: string
+    number: number
+    special: string
+    imageUrl: string
+}
+
 export type CostType = {
     id: string
     building?: BuildingType
