@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, {useState } from 'react'
+import { GameInfoButtonContext } from '../../contexts/GameInfoButtonContext'
+
+// components
 import LightWoodenBtn from '../buttons/lightWoodenBtn/LigthWoodenButton'
 import CloseBtn from '../buttons/CloseBtn'
-
 import Buildings from '../menuSections/Buildings'
-
-import { GameInfoButtonContext } from '../../contexts/GameInfoButtonContext'
 import Cards from '../menuSections/Cards'
+import Dangers from '../menuSections/Dangers'
+import Developements from '../menuSections/Developements'
 
 type componentType = {
     visible: boolean,
@@ -22,6 +24,10 @@ const ComponentContent = ({ section }: {section: string}) => {
             return <Buildings/>
         case "Cards":
             return <Cards/>
+        case "Dangers":
+            return <Dangers/>
+        case "Developements":
+            return <Developements/>
         default:
             return <></>
     }
@@ -41,7 +47,7 @@ const GameInfoModal = ({ visible, setVisible}: componentType) => {
                 <LightWoodenBtn text="How to play" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Cards" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Buildings" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
-                <LightWoodenBtn text="Developents" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
+                <LightWoodenBtn text="Developements" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
                 <LightWoodenBtn text="Dangers" position={{x: 10, y: 10}} onClickFunction={() => console.log("")}/>
             </GameInfoButtonContext.Provider>
         </View>

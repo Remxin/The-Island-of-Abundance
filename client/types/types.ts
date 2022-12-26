@@ -29,4 +29,19 @@ export type CostType = {
     fish: number
 }
 
+export type DangerType = {
+    id: number
+    name: string
+    imageUrl: string
+    description: string
+}
+
+export type DevelopementType = {
+    id: number,
+    name: string
+    imageUrl: string
+    description: string
+    probability: number
+}
+
 export type ResourceType =  "ducats" | "wood" | "stone" | "clay" | "wheat" | "meat" | "fish"

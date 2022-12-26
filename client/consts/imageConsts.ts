@@ -44,8 +44,20 @@ export default {
         "/images/cards/knight_army.jpg": require("../public/images/cards/knight_army.jpg"),
         "/images/cards/lake.jpg": require("../public/images/cards/lake.jpg"),
         "/images/cards/trading.jpg": require("../public/images/cards/trading.jpg"),
-        
+    },
 
+    dangersImageMap: {
+        '/images/dangers/bandits.png': require("../public/images/dangers/bandits.png"),
+        '/images/dangers/barbarian.png': require("../public/images/dangers/barbarian.png"),
+        '/images/dangers/arsonist.png': require("../public/images/dangers/arsonist.png")
+    },
+
+    developementsImageMap: {
+        "/images/developements/betrayal.png": require("../public/images/developements/betrayal.png"),
+        "/images/developements/bribery.png": require("../public/images/developements/bribery.png"),
+        "/images/developements/dark_knight.png": require("../public/images/developements/dark_knight.png"),
+        "/images/developements/knight.png": require("../public/images/developements/knight.jpg"),
+        "/images/developements/wonder.png": require("../public/images/developements/wonder.png"),
     },
 
     tierBorderMap: {
